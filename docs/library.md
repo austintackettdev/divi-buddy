@@ -19,8 +19,8 @@ under the **Divi Buddy** category, so clients can add them to any page from the 
    - **rejects** the section if it uses a preset or a color/variable that only exists on your dev site,
    - **warns** about links (e.g. a button linking to your dev site's contact page),
    - writes `library/<section-name>.json`.
-6. **Check it** on the dev site: open Divi Buddy. The section syncs into the Divi Library automatically,
-   and the **Section Library** list shows it as "Ready to use".
+6. **Check it** on the dev site: open **Divi Buddy → Section Library**. The section syncs into the Divi Library automatically,
+   and the list shows it as "Ready to use".
 7. **Commit and release** (see [releasing.md](releasing.md)). Sites pick it up after they update.
 
 ## Updating a section
@@ -29,7 +29,7 @@ Change it in Divi, export it again under the **same name**, and convert it again
 replaced (the name decides the file: "Hero Split" → `library/hero-split.json`). After the release:
 
 - Sites where nobody touched that library item get the new version automatically.
-- Sites where someone edited the item in their Divi Library keep their edit. The Divi Buddy page shows
+- Sites where someone edited the item in their Divi Library keep their edit. The **Divi Buddy → Section Library** page shows
   "Changed on this site" with a **Restore original** button.
 - Pages that already use the section are never changed. Each page has its own copy.
 
@@ -42,4 +42,4 @@ unless someone edited it there, in which case it's left alone. Pages that use it
 If the section is added back later, it returns automatically.
 
 If a **client** deletes a Divi Buddy item from their library, it stays deleted. They can bring it back
-with **Restore original** on the Divi Buddy page.
+with **Restore original** on the **Divi Buddy → Section Library** page.

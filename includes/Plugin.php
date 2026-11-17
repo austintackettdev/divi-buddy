@@ -7,6 +7,7 @@
 
 namespace DiviBuddy;
 
+use DiviBuddy\Admin\LibraryPage;
 use DiviBuddy\Admin\SettingsPage;
 use DiviBuddy\Divi\Divi;
 use DiviBuddy\Divi\VariablesSync;
@@ -61,7 +62,8 @@ final class Plugin {
 		$library->register();
 
 		if ( is_admin() ) {
-			( new SettingsPage( $sync, $library ) )->register();
+			( new SettingsPage( $sync ) )->register();
+			( new LibraryPage( $library ) )->register();
 		}
 	}
 

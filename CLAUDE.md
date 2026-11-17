@@ -67,7 +67,8 @@ divi-buddy/
 ├── includes/
 │   ├── Plugin.php              # Wires up modules; boots on `init` priority 5 (Divi 5 boots at 0)
 │   ├── Updater.php             # GitHub self-update
-│   ├── Admin/SettingsPage.php
+│   ├── Admin/SettingsPage.php  # "Divi Buddy → Site Design" (top-level menu)
+│   ├── Admin/LibraryPage.php   # "Divi Buddy → Section Library" submenu
 │   ├── Settings/Schema.php     # Single source of truth for every setting
 │   ├── Settings/Sanitizer.php  # Pure, unit tested
 │   ├── Settings/Settings.php   # Reads/writes the `dbuddy_settings` option
