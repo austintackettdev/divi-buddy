@@ -11,6 +11,7 @@ use DiviBuddy\Admin\SettingsPage;
 use DiviBuddy\Divi\Divi;
 use DiviBuddy\Divi\VariablesSync;
 use DiviBuddy\Frontend\CssOutput;
+use DiviBuddy\Library\LibrarySync;
 use DiviBuddy\Settings\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -56,8 +57,11 @@ final class Plugin {
 
 		( new CssOutput() )->register();
 
+		$library = new LibrarySync();
+		$library->register();
+
 		if ( is_admin() ) {
-			( new SettingsPage( $sync ) )->register();
+			( new SettingsPage( $sync, $library ) )->register();
 		}
 	}
 

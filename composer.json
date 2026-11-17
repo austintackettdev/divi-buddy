@@ -17,12 +17,17 @@
 		}
 	},
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpunit",
+		"library:add": "@php bin/library-add.php"
 	},
 	"config": {
 		"sort-packages": true,
 		"platform": {
 			"php": "8.1.29"
 		}
+	},
+	"scripts-descriptions": {
+		"test": "Run the unit tests.",
+		"library:add": "Add Divi Library exports from library-inbox/ (or given paths) to the section library."
 	}
 }

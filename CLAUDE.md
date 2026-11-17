@@ -14,7 +14,7 @@ Machine-specific and personal notes live in `CLAUDE.local.md`, which is not comm
    - **Spacing:** a spacing scale (xs → xxl), section padding and the gap between columns.
    - **Shapes:** corner rounding and content width.
 2. **Push those settings into Divi 5** (global colors, built-in fonts, global variables) so they appear in the Visual Builder.
-3. **Section/Layout library** (next to build): sections the author builds in Divi 5 ship with the plugin and appear on every site as native, editable Divi 5 content.
+3. **Section library** (built): sections the author builds in Divi 5 ship with the plugin and appear on every site as native, editable Divi 5 content in the Divi Library.
 4. **Self-updates from GitHub Releases** (built).
 
 ### Out of scope
@@ -76,11 +76,14 @@ divi-buddy/
 │   ├── Divi/VariablesSync.php  # Writes to Divi through its GlobalData API
 │   ├── Frontend/CssBuilder.php # Settings → CSS (pure, unit tested)
 │   ├── Frontend/CssOutput.php
+│   ├── Library/                # BlockMarkup, SectionConverter, Library (pure) + LibrarySync (WP)
 │   └── Support/                # FluidSize (clamp math), ValueFormatter
 ├── assets/admin/{css,js}/
+├── assets/library/placeholder.svg
+├── bin/library-add.php         # Export → library converter (dev only, not shipped)
 ├── lib/plugin-update-checker/  # Bundled third-party library (MIT), don't edit
-├── library/                    # (planned) Divi 5 section exports
-├── docs/                       # divi5-notes.md, releasing.md
+├── library/                    # Portable section files (<id>.json), shipped with the plugin
+├── docs/                       # divi5-notes.md, releasing.md, library.md
 └── tests/unit/                 # PHPUnit + Brain Monkey
 ```
 
@@ -105,13 +108,21 @@ The research findings (verified on Divi 5.19.0) are in [docs/divi5-notes.md](doc
 - Divi's variable save requires a user with `edit_theme_options`, so syncs run during admin requests, not in cron.
 - Anything marked ❓ in the notes must be verified before it's relied on.
 
-## Section library (next)
+## Section library (built)
 
-- Exported Divi 5 sections are stored as JSON in `/library` and shipped through plugin updates.
-- On activation, after a plugin update, or when an admin clicks **"Sync library"**, the plugin creates or updates them as Divi Library items, tagged as Divi Buddy items, so clients can insert them from the Visual Builder.
-- Sync is idempotent: match items by a `_dbuddy_library_id` meta, update only plugin-owned items, never touch layouts the site owner created.
-- Use Divi Buddy's own small importer. Divi's built-in importer can't update existing layouts. The exact post meta and terms are in the notes.
-- Sections must be portable: no site-specific image URLs or attachment IDs, no module preset IDs, and no color or variable IDs except `gcid-dbuddy-*`, `gvid-dbuddy-*` and Divi's built-in colors. Add a validation step that flags violations.
+Author workflow: [docs/library.md](docs/library.md). Code: `includes/Library/`.
+- **Converter** (`bin/library-add.php`, run as `composer library:add`): Divi Library export `.json` files (from the git-ignored `library-inbox/`) → `library/<id>.json` (`{ id, title, divi_version, content }`). The id is the slugified title. `SectionConverter` enforces portability:
+  - image URLs → `{{dbuddy:placeholder-image}}` token, with sibling `id`/`attachmentId` dropped,
+  - `modulePreset`/`groupPreset` → error,
+  - colors/variables other than `gcid-dbuddy-*`, `gvid-dbuddy-*`, Divi's 5 built-in colors and 2 built-in fonts → error,
+  - other absolute links → warning.
+
+  It's pure PHP with no WordPress (`BlockMarkup` parses and re-encodes block attribute JSON exactly like WordPress's `serialize_block_attributes`). Untouched blocks stay byte-identical.
+- **Sync** (`LibrarySync`): runs on the next admin page load whenever the library folder's fingerprint (file names, sizes and mtimes, plugin version, placeholder URL) changes, plus the "Update section library" button. It writes `et_pb_layout` posts with the terms and meta from the notes, the `Divi Buddy` `layout_category`, and `_dbuddy_library_id`. The token resolves to `assets/library/placeholder.svg` on each site.
+  - Edits made on the site are detected with `_dbuddy_local_hash` (a hash of the title and content read back after writing) and kept. "Restore original" forces a rewrite.
+  - Items trashed by a client stay trashed. Items Divi Buddy trashed itself (section removed from the plugin, marked `_dbuddy_removed`) come back when the section returns.
+  - kses filters are lifted while writing, and the content is passed through `wp_slash()`.
+- Divi lists library items live from the database (`ET_Builder_Library::builder_library_layouts_data()`, key `layouts_data.items`), so no cache clearing is needed.
 
 ## Nice-to-haves (after v1, confirm first)
 

@@ -10,3 +10,6 @@ Thumbs.db
 
 # Private, machine-specific notes for Claude Code.
 CLAUDE.local.md
+
+# Divi Library exports waiting to be converted (bin/library-add.php). They embed images and site data.
+/library-inbox/

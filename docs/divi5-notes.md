@@ -57,7 +57,7 @@ Divi's own IDs are 10 random lowercase alphanumeric characters, e.g. `gcid-j18rm
 
 - In CSS output, variables become CSS custom properties: `var(--gvid-<id>)`. Global colors become `var(--gcid-<id>)`.
 - Variable values may be complex CSS such as `clamp()`, `calc()`, `rem` or `vw`. Divi treats them as opaque strings, which makes fluid type sizes possible.
-- In module attributes, references are stored as `$variable(<json>)$` tokens. Inside block-comment JSON, the quotes are escaped as `"`. Real examples from saved content:
+- In module attributes, references are stored as `$variable(<json>)$` tokens. Inside block-comment JSON, the quotes are escaped as `\u0022`. Real examples from saved content:
   - Number variable (padding, font size): `$variable({"type":"content","value":{"name":"gvid-3cytnsrj13","settings":{}}})$`
   - Global color: `$variable({"type":"color","value":{"name":"gcid-j18rmkfenx","settings":{}}})$`
 - Example locations: `module.decoration.spacing.desktop.value.padding.top`, `content.decoration.headingFont.h2.font.desktop.value.size` and `…value.color`.
@@ -92,6 +92,14 @@ A saved section is an `et_pb_layout` post:
   canvases: [], thumbnails: [],
   images: { "<original url>": { url, id, encoded: "<base64>" } } }           // images embedded as base64 (big!)
 ```
+
+### Verified with Divi Buddy's library sync ✅
+
+An `et_pb_layout` post created with `wp_insert_post` plus the meta and terms above (and a `Divi Buddy`
+`layout_category`) shows up immediately in `ET_Builder_Library::instance()->builder_library_layouts_data( 'section' )`,
+the list the builder uses. Items are under `['layouts_data']['items']` and categories under
+`['layouts_data']['categories']`. The list includes trashed items (`post_status` publish + trash).
+There's no cache to clear.
 
 ### Why Divi's own importer isn't reusable
 

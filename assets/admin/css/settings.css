@@ -158,6 +158,45 @@
 	font-weight: 600;
 }
 
+/* Section library */
+.dbuddy-library {
+	margin-top: 32px;
+	padding-top: 8px;
+	border-top: 1px solid #c3c4c7;
+}
+
+.dbuddy-library-table {
+	max-width: 760px;
+	margin: 12px 0;
+}
+
+.dbuddy-library-actions {
+	width: 160px;
+	text-align: right;
+}
+
+.dbuddy-restore-form {
+	margin: 0;
+}
+
+.dbuddy-state {
+	font-weight: 600;
+}
+
+.dbuddy-state--up_to_date {
+	color: #00a32a;
+}
+
+.dbuddy-state--modified,
+.dbuddy-state--update_pending {
+	color: #996800;
+}
+
+.dbuddy-state--deleted,
+.dbuddy-state--not_added {
+	color: #646970;
+}
+
 /* Tools */
 .dbuddy-tools {
 	margin-top: 32px;
