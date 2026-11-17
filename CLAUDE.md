@@ -125,12 +125,16 @@ Author workflow: [docs/library.md](docs/library.md). Code: `includes/Library/`.
   - kses filters are lifted while writing, and the content is passed through `wp_slash()`.
 - Divi lists library items live from the database (`ET_Builder_Library::builder_library_layouts_data()`, key `layouts_data.items`), so no cache clearing is needed.
 
-## Nice-to-haves (after v1, confirm first)
+## Feature ideas & roadmap: GitHub Issues
 
-- Export/import settings as JSON, to copy a design setup between sites.
-- Owner "lock" for specific settings so clients can't change them.
-- Live preview panel on the settings page.
-- A "Divi Buddy" folder for its colors and variables in Divi's variable manager (the owner chose to wait on this).
+All feature ideas, planned work and bugs are tracked as **GitHub Issues** on `austintackettdev/divi-buddy`. Manage them with the `gh` CLI. Don't keep feature lists in files.
+- Labels:
+  - `feature`: planned, agreed work.
+  - `idea`: worth considering, not decided yet. Confirm with the owner before building it.
+  - `bug`: something isn't working.
+- "Add an idea …" → `gh issue create --label idea`. "What's next?" → `gh issue list`.
+- Reference the issue in the commit that completes it (`Closes #N`) so it closes on push.
+- The repo is public, so issues are public: no client names, site details or other personal info in issues.
 
 ## Releases & self-updates
 
