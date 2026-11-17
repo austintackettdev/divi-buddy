@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Divi Buddy
  * Description:       Site-wide design settings (colors, fonts, sizes, spacing) for Divi 5, synced into Divi's Global Variables.
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Divi Buddy
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DBUDDY_VERSION', '0.2.0' );
+define( 'DBUDDY_VERSION', '0.3.0' );
 define( 'DBUDDY_FILE', __FILE__ );
 define( 'DBUDDY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DBUDDY_URL', plugin_dir_url( __FILE__ ) );
