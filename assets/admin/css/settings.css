@@ -1,0 +1,184 @@
+/* Divi Buddy settings page */
+
+.dbuddy {
+	max-width: 960px;
+}
+
+.dbuddy-intro {
+	font-size: 14px;
+	max-width: 680px;
+}
+
+/* Tabs */
+.dbuddy-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 20px 0 0;
+	border-bottom: 1px solid #c3c4c7;
+}
+
+.dbuddy-tab {
+	appearance: none;
+	background: #f0f0f1;
+	border: 1px solid #c3c4c7;
+	border-bottom: none;
+	border-radius: 4px 4px 0 0;
+	padding: 10px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #50575e;
+	cursor: pointer;
+	margin-bottom: -1px;
+}
+
+.dbuddy-tab:hover,
+.dbuddy-tab:focus {
+	color: #1d2327;
+	background: #fff;
+}
+
+.dbuddy-tab.is-active {
+	background: #fff;
+	color: #1d2327;
+	border-bottom: 1px solid #fff;
+}
+
+/* Panels */
+.dbuddy-panel {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-top: none;
+	padding: 8px 24px 16px;
+}
+
+.dbuddy-panel[hidden] {
+	display: none;
+}
+
+.dbuddy-panel-description {
+	font-size: 14px;
+	color: #50575e;
+	margin: 16px 0 8px;
+}
+
+.dbuddy-field {
+	display: grid;
+	grid-template-columns: minmax(200px, 1fr) minmax(260px, 1.4fr);
+	gap: 8px 32px;
+	align-items: start;
+	padding: 16px 0;
+	border-top: 1px solid #f0f0f1;
+}
+
+.dbuddy-field-label label {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.dbuddy-field-label .description {
+	margin: 4px 0 0;
+}
+
+.dbuddy-field-control select {
+	min-width: 220px;
+	max-width: 100%;
+}
+
+/* Numbers & fluid pairs */
+.dbuddy-number {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.dbuddy-number input[type="number"] {
+	width: 80px;
+}
+
+.dbuddy-unit {
+	color: #646970;
+}
+
+.dbuddy-fluid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.dbuddy-fluid-part {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.dbuddy-fluid-label {
+	font-size: 12px;
+	color: #646970;
+}
+
+/* Size preview */
+.dbuddy-preview {
+	display: flex;
+	align-items: baseline;
+	gap: 24px;
+	margin-top: 8px;
+	line-height: 1.1;
+	color: #1d2327;
+	overflow: hidden;
+}
+
+.dbuddy-preview span {
+	font-weight: 600;
+}
+
+.dbuddy-preview-mobile {
+	opacity: 0.6;
+}
+
+/* Bottom bar */
+.dbuddy-panel-actions {
+	margin: 16px 0 0;
+	text-align: right;
+}
+
+.dbuddy-savebar {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 12px 0;
+	background: #f0f0f1;
+}
+
+.dbuddy-unsaved {
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+/* Tools */
+.dbuddy-tools {
+	margin-top: 32px;
+	padding-top: 8px;
+	border-top: 1px solid #c3c4c7;
+}
+
+.dbuddy-inline-form {
+	margin: 12px 0;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+@media (max-width: 782px) {
+	.dbuddy-field {
+		grid-template-columns: 1fr;
+	}
+
+	.dbuddy-panel {
+		padding: 8px 16px 16px;
+	}
+}

@@ -1,0 +1,12 @@
+/vendor/
+/.phpunit.cache/
+/node_modules/
+*.zip
+.DS_Store
+Thumbs.db
+
+# Divi exports embed images as base64 and can contain site data.
+/docs/*.json
+
+# Private, machine-specific notes for Claude Code.
+CLAUDE.local.md

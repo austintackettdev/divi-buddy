@@ -1,0 +1,51 @@
+# Builds divi-buddy.zip and publishes a GitHub Release whenever a version tag (e.g. v0.2.0) is pushed.
+# Live sites update from that zip. See docs/releasing.md.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          tools: composer
+
+      - name: Install test dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run unit tests
+        run: vendor/bin/phpunit
+
+      - name: Check the tag matches the plugin version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          HEADER=$(grep -m1 -E '^\s*\*\s*Version:' divi-buddy.php | sed -E 's/.*Version:\s*//' | tr -d '[:space:]')
+          CONSTANT=$(grep -m1 "define( 'DBUDDY_VERSION'" divi-buddy.php | sed -E "s/.*'DBUDDY_VERSION', '([^']+)'.*/\1/")
+          echo "tag=$TAG header=$HEADER constant=$CONSTANT"
+          if [ "$TAG" != "$HEADER" ] || [ "$TAG" != "$CONSTANT" ]; then
+            echo "::error::Tag v$TAG does not match the plugin header ($HEADER) and DBUDDY_VERSION ($CONSTANT)."
+            exit 1
+          fi
+
+      - name: Build divi-buddy.zip
+        run: |
+          git archive --format=zip --prefix=divi-buddy/ -o divi-buddy.zip "$GITHUB_REF_NAME"
+          unzip -l divi-buddy.zip | tail -1
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" divi-buddy.zip --title "Divi Buddy $GITHUB_REF_NAME" --generate-notes
